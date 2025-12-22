@@ -39,21 +39,21 @@
         /* ===== CSS VARIABLES FOR THEME SWITCHING ===== */
         :root {
             /* Light Theme Colors */
-            --primary-color: #8B7355;
-            --secondary-color: #D4A76A;
-            --accent-color: #3A6EA5;
-            --text-color: #333333;
-            --text-light: #666666;
-            --bg-color: #FFFFFF;
-            --bg-secondary: #F9F5F0;
-            --bg-tertiary: #F0E6D6;
-            --border-color: #E0D5C3;
-            --shadow: rgba(0, 0, 0, 0.08);
-            --shadow-hover: rgba(0, 0, 0, 0.12);
+            --primary-color: #8B6F47;
+            --secondary-color: #A0826D;
+            --accent-color: #6B5637;
+            --text-color: #3A2F1F;
+            --text-light: #6B5637;
+            --bg-color: #FAF8F3;
+            --bg-secondary: #F5F0E6;
+            --bg-tertiary: #E8DDD0;
+            --border-color: #D4C4B0;
+            --shadow: rgba(107, 86, 55, 0.08);
+            --shadow-hover: rgba(107, 86, 55, 0.12);
             --card-bg: #FFFFFF;
-            --header-bg: rgba(255, 255, 255, 0.95);
-            --footer-bg: #2C2416;
-            --footer-text: #E0D5C3;
+            --header-bg: rgba(250, 248, 243, 0.95);
+            --footer-bg: #3A2F1F;
+            --footer-text: #D4C4B0;
             
             /* Typography */
             --font-primary: 'Inter', sans-serif;
@@ -70,21 +70,21 @@
         
         /* Dark Theme Colors */
         [data-theme="dark"] {
-            --primary-color: #D4A76A;
-            --secondary-color: #8B7355;
-            --accent-color: #5A9DE6;
-            --text-color: #F5F1EB;
-            --text-light: #B8AB9A;
-            --bg-color: #1A1611;
-            --bg-secondary: #252017;
-            --bg-tertiary: #302A1F;
-            --border-color: #3D3529;
-            --shadow: rgba(0, 0, 0, 0.25);
-            --shadow-hover: rgba(0, 0, 0, 0.35);
-            --card-bg: #252017;
-            --header-bg: rgba(26, 22, 17, 0.95);
+            --primary-color: #A0826D;
+            --secondary-color: #8B6F47;
+            --accent-color: #6B5637;
+            --text-color: #F5F0E6;
+            --text-light: #D4C4B0;
+            --bg-color: #2A2318;
+            --bg-secondary: #3A2F1F;
+            --bg-tertiary: #4A3A2A;
+            --border-color: #6B5637;
+            --shadow: rgba(107, 86, 55, 0.25);
+            --shadow-hover: rgba(107, 86, 55, 0.35);
+            --card-bg: #3A2F1F;
+            --header-bg: rgba(42, 35, 24, 0.95);
             --footer-bg: #1A1611;
-            --footer-text: #B8AB9A;
+            --footer-text: #D4C4B0;
         }
         
         /* ===== BASE STYLES ===== */
@@ -303,6 +303,18 @@
             background-color: var(--text-color);
             border-radius: 2px;
             transition: var(--transition);
+        }
+        
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
         }
         
         .nav-menu {
@@ -1329,12 +1341,153 @@
                 transform: translateY(0);
                 opacity: 1;
                 visibility: visible;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            }
+            
+            .nav-menu.active .nav-link {
+                opacity: 0;
+                transform: translateY(20px);
+                animation: slideInUp 0.3s ease forwards;
+            }
+            
+            .nav-menu.active .nav-link:nth-child(1) { animation-delay: 0.1s; }
+            .nav-menu.active .nav-link:nth-child(2) { animation-delay: 0.2s; }
+            .nav-menu.active .nav-link:nth-child(3) { animation-delay: 0.3s; }
+            .nav-menu.active .nav-link:nth-child(4) { animation-delay: 0.4s; }
+            .nav-menu.active .nav-link:nth-child(5) { animation-delay: 0.5s; }
+            .nav-menu.active .nav-link:nth-child(6) { animation-delay: 0.6s; }
+            .nav-menu.active .nav-link:nth-child(7) { animation-delay: 0.7s; }
+            
+            @keyframes slideInUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .nav-menu.active::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+                animation: slideIn 0.3s ease;
+            }
+            
+            @keyframes slideIn {
+                from {
+                    transform: translateX(-100%);
+                }
+                to {
+                    transform: translateX(0);
+                }
+            }
+            
+            .nav-menu li {
+                list-style: none;
+                margin: 8px 0;
+                position: relative;
+                transition: all 0.3s ease;
+                transform-origin: left center;
+            }
+            
+            .nav-menu li::before {
+                content: '';
+                position: absolute;
+                left: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 8px;
+                height: 8px;
+                background-color: var(--primary-color);
+                border-radius: 50%;
+                opacity: 0;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-menu li:hover {
+                transform: translateX(15px) scale(1.02);
+            }
+            
+            .nav-menu li:hover::before {
+                opacity: 1;
+                left: -10px;
+                width: 12px;
+                height: 12px;
+            }
+            
+            .nav-menu li:active {
+                transform: translateX(10px) scale(0.98);
             }
             
             .nav-link {
-                padding: 15px 0;
+                padding: 20px 30px;
                 border-bottom: 1px solid var(--border-color);
                 width: 100%;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+                font-size: 1.1rem;
+                font-weight: 600;
+                margin: 5px 0;
+                border-radius: 8px;
+                background-color: transparent;
+            }
+            
+            .nav-link::before {
+                content: '';
+                position: absolute;
+                left: -100%;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(139, 115, 85, 0.1), transparent);
+                transition: left 0.5s ease;
+            }
+            
+            .nav-link:hover::before {
+                left: 100%;
+            }
+            
+            .nav-link:hover {
+                color: var(--primary-color);
+                transform: translateX(10px);
+                background-color: var(--bg-secondary);
+                box-shadow: 0 4px 15px rgba(139, 115, 85, 0.2);
+                border-left: 4px solid var(--primary-color);
+            }
+            
+            .nav-menu.active .nav-link {
+                color: white;
+                text-decoration: none;
+                display: block;
+                padding: 15px 25px;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                position: relative;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+                transform: translateX(5px);
+                border-left: 4px solid white;
+            }
+            
+            .nav-menu.active .nav-link:hover {
+                color: white;
+                background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+                transform: translateX(8px);
+                box-shadow: 0 4px 20px rgba(139, 115, 85, 0.4);
+            }
+            
+            .nav-menu.active .nav-link.active {
+                color: white;
+                background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+                box-shadow: 0 4px 25px rgba(139, 115, 85, 0.5);
+                transform: translateX(8px);
+                border-left: 4px solid white;
             }
             
             .nav-link:last-child {
@@ -1420,26 +1573,14 @@
                     <span class="logo-subtext">Artisans</span>
                 </a>
                 
-                <div class="nav-controls">
-                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
-                    </button>
-                    
-                    <div class="language-switcher">
-                        <button class="lang-btn active" data-lang="en">EN</button>
-                        <button class="lang-btn" data-lang="fr">FR</button>
-                        <button class="lang-btn" data-lang="ar">AR</button>
-                    </div>
-                    
-                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                        <span class="bar"></span>
-                    </button>
-                </div>
+                                                                        
                 
-                <ul class="nav-menu" id="navMenu">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle mobile menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+                    <ul class="nav-menu" id="navMenu">
                     <li><a href="#home" class="nav-link active" data-key="nav.home">Home</a></li>
                     <li><a href="#about" class="nav-link" data-key="nav.about">About</a></li>
                     <li><a href="#categories" class="nav-link" data-key="nav.categories">Categories</a></li>
@@ -2780,6 +2921,31 @@
                         behavior: 'smooth'
                     });
                 });
+            });
+        }
+
+        // ===== BURGER MENU FUNCTIONALITY =====
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close menu when clicking on a nav link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!menuToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
             });
         }
 
